@@ -26,18 +26,19 @@
             
         }
     }
-    
-    [stringBuffer sortUsingSelector:@selector(compare:)];
-    [numbersBuffer sortUsingSelector:@selector(compare:)];
-    
     if ([stringBuffer count] == 0) {
+        [numbersBuffer sortUsingSelector:@selector(compare:)];
         return numbersBuffer;
     }
     
     if ([numbersBuffer count] == 0) {
+        [stringBuffer sortUsingSelector:@selector(compare:)];
         return stringBuffer;
     }
     
+    [numbersBuffer sortUsingSelector:@selector(compare:)];
+    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"self" ascending:NO];
+    [stringBuffer sortUsingDescriptors:[NSArray arrayWithObject:sortDescriptor]];
     return [[NSArray alloc] initWithObjects:numbersBuffer, stringBuffer, nil];
 }
 
